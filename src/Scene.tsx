@@ -51,6 +51,54 @@ function StandardTable({
           onToggle={onToggle}
         />
       )}
+      {/* Ноутбук на столе */}
+      <Laptop position={[0, tableHeight + 0.01, 0]} rotete180={position[2]<0}/>
+    </group>
+  )
+}
+
+// Ноутбук на столе
+function Laptop({ position, rotete180 }: { position: [number, number, number], rotete180: boolean }) {
+  const laptopWidth = 0.35
+  const laptopDepth = 0.25
+  const laptopHeight = 0.02
+  const screenHeight = 0.2
+  
+  return (
+    <group position={position} rotation={[0, (rotete180 ? 3.14 : 0), 0]}>
+      {/* Корпус ноутбука (клавиатура) */}
+      <mesh position={[0, laptopHeight / 2, 0]} castShadow={true} receiveShadow={true}>
+        <boxGeometry args={[laptopWidth, laptopHeight, laptopDepth]} />
+        <meshStandardMaterial color="#2C2C2C" roughness={0.6} metalness={0.3} />
+      </mesh>
+      {/* Экран ноутбука */}
+      <group 
+        position={[0, screenHeight / 2 + laptopHeight, -0.17]}
+        rotation={[-Math.PI / 6, 0, 0]}
+      >
+        <mesh castShadow={true}>
+          <boxGeometry args={[laptopWidth - 0.02, screenHeight, 0.01]} />
+          <meshStandardMaterial 
+            color="#E0E0E0" 
+            emissive="#B0D4FF" 
+            emissiveIntensity={1.5}
+            roughness={0.2}
+          />
+        </mesh>
+        {/* Источник света от экрана */}
+        <pointLight 
+          position={[0, 0, 0.02]} 
+          intensity={0.3} 
+          color="#B0D4FF"
+          distance={1}
+          decay={2}
+        />
+        {/* Рама экрана */}
+        <mesh position={[0, 0, -0.002]} castShadow={true}>
+          <boxGeometry args={[laptopWidth, screenHeight + 0.01, 0.015]} />
+          <meshStandardMaterial color="#1A1A1A" roughness={0.8} />
+        </mesh>
+      </group>
     </group>
   )
 }
@@ -243,8 +291,8 @@ function Person({ position, rotation }: { position: [number, number, number], ro
         <boxGeometry args={[0.5, 0.05, 0.5]} />
         <meshStandardMaterial color="#7F8C8D" roughness={0.8} />
       </mesh>
-      <mesh position={[0, 0.4, -0.25]} castShadow={true}>
-        <boxGeometry args={[0.5, 0.3, 0.05]} />
+      <mesh position={[0, 0.35, -0.28]} rotation={[-Math.PI / 15, 0, 0]} castShadow={true}>
+        <boxGeometry args={[0.5, 0.3, 0.05]}/>
         <meshStandardMaterial color="#7F8C8D" roughness={0.8} />
       </mesh>
     </group>

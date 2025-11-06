@@ -6,8 +6,8 @@ function App() {
   return (
     <div className="app">
       <div className="header">
-        <h1>Three.js Office Scene</h1>
-        <p>Office Meeting Room with 6 People</p>
+        <h1>Dream team</h1>
+        <p>The MBusiness Office</p>
       </div>
       <div className="canvas-container">
         <Canvas
