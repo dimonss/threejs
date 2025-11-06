@@ -70,7 +70,7 @@ function TableLighting({ isOn }: { isOn: boolean }) {
   const tableWidth = 1.5
   const spacing = 0.05
   const lightLength = 1.3 // Длина продольного светильника
-  const lightHeight = 1.8 // Высота над перегородкой
+  const lightHeight = 2.8 // Высота над перегородкой
   
   // Позиции для трех продольных светильников (над перегородками)
   const lightPositions: Array<[number, number, number]> = [
@@ -96,10 +96,11 @@ function TableLighting({ isOn }: { isOn: boolean }) {
           {isOn && (
             <pointLight 
               position={[0, 0, 0]} 
-              intensity={0.6} 
+              intensity={1}
               color="#FFFFFF"
-              distance={3}
-              decay={2}
+              distance={6}
+              decay={0.4}
+              castShadow={true}
             />
           )}
         </group>
@@ -289,27 +290,8 @@ export default function Scene() {
       <PerspectiveCamera makeDefault position={[0, 4, 8]} fov={50} />
       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
       
-      {/* Освещение */}
-      <ambientLight intensity={isLightOn ? 0.4 : 0.1} />
-      {isLightOn && (
-        <>
-          <directionalLight 
-            position={[0, 4, 0]} 
-            intensity={1.2} 
-            castShadow={true}
-            shadow-mapSize-width={2048}
-            shadow-mapSize-height={2048}
-            shadow-camera-far={10}
-            shadow-camera-left={-5}
-            shadow-camera-right={5}
-            shadow-camera-top={5}
-            shadow-camera-bottom={-5}
-          />
-          {/* Дополнительное освещение сверху */}
-          <pointLight position={[0, 3.5, 0]} intensity={0.8} color="#FFFFFF" />
-        </>
-      )}
-      
+      {/* Фоновое освещение - всегда включено */}
+      <ambientLight intensity={0.2} />
       {/* Офисная сцена */}
       <Floor />
       <OfficeTable isOn={isLightOn} onToggle={toggleLight} />
