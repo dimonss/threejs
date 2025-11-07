@@ -15,7 +15,7 @@ function App() {
         <ModelLoader totalModels={6}>
           {(onModelLoad) => (
             <Canvas
-              shadows
+              shadows="soft"
               gl={{ antialias: true, alpha: true }}
               dpr={[1, 2]}
             >

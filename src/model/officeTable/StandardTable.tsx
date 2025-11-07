@@ -1,20 +1,13 @@
 import {useMemo} from 'react'
 import {Shape, ExtrudeGeometry} from 'three'
-import LightSwitch from '../LightSwitch.tsx'
 import Laptop from './Laptop.tsx'
 
 export default function StandardTable({
                                           position,
-                                          rotation,
-                                          hasSwitch,
-                                          isOn,
-                                          onToggle
+                                          rotation
                                       }: {
     position: [number, number, number]
     rotation?: number
-    hasSwitch?: boolean
-    isOn?: boolean
-    onToggle?: () => void
 }) {
     const tableWidth = 1.545
     const tableDepth = 0.8
@@ -68,14 +61,6 @@ export default function StandardTable({
             >
                 <meshStandardMaterial color="#A0A0A0" roughness={0.7} metalness={0.2}/>
             </mesh>
-            {/* Выключатель на столе */}
-            {hasSwitch && isOn !== undefined && onToggle && (
-                <LightSwitch
-                    position={[-2.1, tableHeight + 0.2, -0.38]}
-                    isOn={isOn}
-                    onToggle={onToggle}
-                />
-            )}
             {/* Ноутбук на столе */}
             <Laptop position={[0, tableHeight + 0.01, 0]}/>
         </group>

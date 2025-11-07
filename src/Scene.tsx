@@ -4,6 +4,7 @@ import Floor from './model/Floor.tsx'
 import OfficeTable from './model/officeTable/OfficeTable.tsx'
 import TableLighting from './model/TableLighting.tsx'
 import Person from './model/Person.tsx'
+import Column from './model/Column.tsx'
 
 interface SceneProps {
     onModelLoad?: () => void
@@ -42,8 +43,10 @@ export default function Scene({onModelLoad}: SceneProps) {
             <ambientLight intensity={0.2}/>
             {/* Офисная сцена */}
             <Floor/>
-            <OfficeTable isOn={isLightOn} onToggle={toggleLight}/>
+            <OfficeTable/>
             <TableLighting isOn={isLightOn}/>
+            {/* Колонна с выключателем света */}
+            <Column position={[-3, 0, 5]} isOn={isLightOn} onToggle={toggleLight}/>
 
             {/* 6 человек за столами - первый ряд */}
             {row1PersonPositions.map((person, index) => (

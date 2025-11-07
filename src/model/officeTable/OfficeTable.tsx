@@ -2,7 +2,7 @@ import StandardTable from './StandardTable.tsx'
 import Divider from './Divider.tsx'
 import TableLegs from "./TableLegs.tsx";
 
-export default function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle: () => void }) {
+export default function OfficeTable() {
     const tableWidth = 1.5
     const spacing = 0.05 // Расстояние между столами (впритык)
 
@@ -28,9 +28,6 @@ export default function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle:
                 <StandardTable
                     key={`row1-${index}`}
                     position={pos}
-                    hasSwitch={index === 1} // Выключатель на центральном столе первого ряда
-                    isOn={isOn}
-                    onToggle={onToggle}
                 />
             ))}
 

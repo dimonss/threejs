@@ -18,7 +18,7 @@ export default function LightSwitch({
     }
 
     return (
-        <group position={position}>
+        <group position={position} rotation={[0, -Math.PI / 2, 0]}>
             {/* Основание выключателя */}
             <mesh position={[0, 0, 0.01]}>
                 <boxGeometry args={[0.15, 0.25, 0.02]}/>
