@@ -38,13 +38,14 @@ export default function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle:
                 <StandardTable
                     key={`row2-${index}`}
                     position={pos}
+                    rotation={Math.PI}
                 />
             ))}
 
             {/* Перегородки между рядами */}
-            <Divider position={[-tableWidth - spacing, 0.85, 0]}/>
-            <Divider position={[0, 0.85, 0]}/>
-            <Divider position={[tableWidth + spacing, 0.85, 0]}/>
+            <Divider position={[-tableWidth - spacing, 0.79, 0]}/>
+            <Divider position={[0, 0.79, 0]}/>
+            <Divider position={[tableWidth + spacing, 0.79, 0]}/>
         </group>
     )
 }

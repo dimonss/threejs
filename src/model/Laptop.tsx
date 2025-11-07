@@ -1,10 +1,10 @@
-export default function Laptop({position, rotete180}: { position: [number, number, number], rotete180: boolean }) {
+export default function Laptop({position}: { position: [number, number, number] }) {
     const laptopWidth = 0.35
     const laptopDepth = 0.25
     const laptopHeight = 0.02
     const screenHeight = 0.2
     return (
-        <group position={position} rotation={[0, (rotete180 ? 3.14 : 0), 0]}>
+        <group position={position} rotation={[0, 0, 0]}>
             {/* Корпус ноутбука (клавиатура) */}
             <mesh position={[0, laptopHeight / 2, 0]} castShadow={true} receiveShadow={true}>
                 <boxGeometry args={[laptopWidth, laptopHeight, laptopDepth]}/>
