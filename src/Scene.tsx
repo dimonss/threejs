@@ -1,7 +1,7 @@
-import {useRef, useState} from 'react'
+import {useRef, useState, useMemo} from 'react'
 import {useFrame} from '@react-three/fiber'
-import {OrbitControls, PerspectiveCamera} from '@react-three/drei'
-import {Group, Mesh} from 'three'
+import {OrbitControls, PerspectiveCamera, useGLTF} from '@react-three/drei'
+import {Group, Mesh, MeshStandardMaterial, Texture} from 'three'
 
 // Один стандартный стол
 function StandardTable({
@@ -247,6 +247,83 @@ function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle: () => void }) 
     )
 }
 
+// Компонент кресла из модели
+function Armchair({position, rotation}: { position: [number, number, number], rotation?: number }) {
+    // В Vite с base path '/threejs/' файлы из public доступны по /threejs/armchair.gltf
+    // В dev-режиме Vite автоматически добавляет base path к файлам из public
+    const baseUrl = import.meta.env.BASE_URL || '/'
+    const modelPath = `${baseUrl}armchair.gltf`.replace(/\/\//g, '/')
+    const {scene} = useGLTF(modelPath)
+
+    // Клонируем и настраиваем сцену с помощью useMemo для оптимизации
+    const clonedScene = useMemo(() => {
+        const cloned = scene.clone()
+        const baseUrlForTextures = import.meta.env.BASE_URL || '/'
+
+        // Настраиваем материалы и тени для всех мешей в модели
+        cloned.traverse((child) => {
+            if (child instanceof Mesh) {
+                child.castShadow = true
+                child.receiveShadow = true
+
+                // Исправляем пути к текстурам в материалах
+                if (child.material) {
+                    const material = child.material as MeshStandardMaterial
+
+                    // Функция для обновления пути текстуры
+                    const updateTexturePath = (texture: Texture | null) => {
+                        if (!texture) return
+
+                        const image = texture.image as HTMLImageElement | HTMLCanvasElement | null
+                        if (image && 'src' in image && image.src) {
+                            const texturePath = image.src
+                            // Если путь не абсолютный URL и не data URL
+                            if (!texturePath.startsWith('http') && !texturePath.startsWith('data:')) {
+                                // Извлекаем имя файла из пути
+                                const fileName = texturePath.split('/').pop() || texturePath.split('\\').pop() || ''
+                                if (fileName) {
+                                    // Создаем новый путь с base URL
+                                    const newPath = `${baseUrlForTextures}${fileName}`.replace(/\/\//g, '/')
+                                    // Загружаем текстуру заново с правильным путем
+                                    const img = new Image()
+                                    img.crossOrigin = 'anonymous'
+                                    img.onload = () => {
+                                        texture.image = img
+                                        texture.needsUpdate = true
+                                    }
+                                    img.src = newPath
+                                }
+                            }
+                        }
+                    }
+
+                    // Обновляем все текстуры материала
+                    updateTexturePath(material.map)
+                    updateTexturePath(material.normalMap)
+                    updateTexturePath(material.roughnessMap)
+                    updateTexturePath(material.metalnessMap)
+                    updateTexturePath(material.aoMap)
+                    updateTexturePath(material.emissiveMap)
+
+                    // Убеждаемся, что материал обновлен
+                    material.needsUpdate = true
+                }
+            }
+        })
+
+        return cloned
+    }, [scene])
+    
+    return (
+        <primitive 
+            object={clonedScene} 
+            position={position} 
+            rotation={[0, rotation || 0, 0]}
+            scale={[1, 1, 1]}
+        />
+    )
+}
+
 // Человек за столом
 function Person({position, rotation}: { position: [number, number, number], rotation?: number }) {
     const personRef = useRef<Group>(null)
@@ -279,15 +356,8 @@ function Person({position, rotation}: { position: [number, number, number], rota
                 <boxGeometry args={[0.15, 0.5, 0.15]}/>
                 <meshStandardMaterial color="#34495E" roughness={0.7}/>
             </mesh>
-            {/* Стул */}
-            <mesh position={[0, 0.2, 0]} castShadow={true}>
-                <boxGeometry args={[0.5, 0.05, 0.5]}/>
-                <meshStandardMaterial color="#7F8C8D" roughness={0.8}/>
-            </mesh>
-            <mesh position={[0, 0.35, -0.28]} rotation={[-Math.PI / 15, 0, 0]} castShadow={true}>
-                <boxGeometry args={[0.5, 0.3, 0.05]}/>
-                <meshStandardMaterial color="#7F8C8D" roughness={0.8}/>
-            </mesh>
+            {/* Кресло из модели */}
+            <Armchair position={[0, -0.14, -0.15]}/>
         </group>
     )
 }
