@@ -1,5 +1,6 @@
 import StandardTable from './StandardTable.tsx'
 import Divider from './Divider.tsx'
+import TableLegs from "./TableLegs.tsx";
 
 export default function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle: () => void }) {
     const tableWidth = 1.5
@@ -46,6 +47,8 @@ export default function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle:
             <Divider position={[-tableWidth - spacing, 0.79, 0]}/>
             <Divider position={[0, 0.79, 0]}/>
             <Divider position={[tableWidth + spacing, 0.79, 0]}/>
+            {/* Ножки стола */}
+            <TableLegs tableWidth={4.6} tableDepth={1.55} tableHeight={0.6}/>
         </group>
     )
 }

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import Floor from './model/Floor.tsx'
-import OfficeTable from './model/OfficeTable.tsx'
+import OfficeTable from './model/officeTable/OfficeTable.tsx'
 import TableLighting from './model/TableLighting.tsx'
 import Person from './model/Person.tsx'
 

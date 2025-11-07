@@ -1,6 +1,6 @@
 import {useMemo} from 'react'
 import {Shape, ExtrudeGeometry} from 'three'
-import LightSwitch from './LightSwitch.tsx'
+import LightSwitch from '../LightSwitch.tsx'
 import Laptop from './Laptop.tsx'
 
 export default function StandardTable({
@@ -67,23 +67,6 @@ export default function StandardTable({
                 castShadow={true}
             >
                 <meshStandardMaterial color="#A0A0A0" roughness={0.7} metalness={0.2}/>
-            </mesh>
-            {/* Ножки стола */}
-            <mesh position={[-tableWidth / 2 + 0.1, tableHeight / 2, -tableDepth / 2 + 0.1]} castShadow={true}>
-                <boxGeometry args={[0.1, tableHeight, 0.1]}/>
-                <meshStandardMaterial color="#FACD64" roughness={0.8}/>
-            </mesh>
-            <mesh position={[tableWidth / 2 - 0.1, tableHeight / 2, -tableDepth / 2 + 0.1]} castShadow={true}>
-                <boxGeometry args={[0.1, tableHeight, 0.1]}/>
-                <meshStandardMaterial color="#FACD64" roughness={0.8}/>
-            </mesh>
-            <mesh position={[-tableWidth / 2 + 0.1, tableHeight / 2, tableDepth / 2 - 0.1]} castShadow={true}>
-                <boxGeometry args={[0.1, tableHeight, 0.1]}/>
-                <meshStandardMaterial color="#FACD64" roughness={0.8}/>
-            </mesh>
-            <mesh position={[tableWidth / 2 - 0.1, tableHeight / 2, tableDepth / 2 - 0.1]} castShadow={true}>
-                <boxGeometry args={[0.1, tableHeight, 0.1]}/>
-                <meshStandardMaterial color="#FACD64" roughness={0.8}/>
             </mesh>
             {/* Выключатель на столе */}
             {hasSwitch && isOn !== undefined && onToggle && (
