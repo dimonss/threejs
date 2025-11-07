@@ -1,5 +1,5 @@
-import StandardTable from './StandardTable'
-import Divider from './Divider'
+import StandardTable from './StandardTable.tsx'
+import Divider from './Divider.tsx'
 
 export default function OfficeTable({isOn, onToggle}: { isOn: boolean, onToggle: () => void }) {
     const tableWidth = 1.5

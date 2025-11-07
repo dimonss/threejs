@@ -1,9 +1,15 @@
 import {useRef} from 'react'
 import {useFrame} from '@react-three/fiber'
 import {Group} from 'three'
-import Armchair from './Armchair'
+import Armchair from './Armchair.tsx'
 
-export default function Person({position, rotation}: { position: [number, number, number], rotation?: number }) {
+interface PersonProps {
+    position: [number, number, number]
+    rotation?: number
+    onModelLoad?: () => void
+}
+
+export default function Person({position, rotation, onModelLoad}: PersonProps) {
     const personRef = useRef<Group>(null)
 
     useFrame(() => {
@@ -35,7 +41,7 @@ export default function Person({position, rotation}: { position: [number, number
                 <meshStandardMaterial color="#34495E" roughness={0.7}/>
             </mesh>
             {/* Кресло из модели */}
-            <Armchair position={[0, -0.14, -0.15]}/>
+            <Armchair position={[0, -0.14, -0.15]} onLoad={onModelLoad}/>
         </group>
     )
 }

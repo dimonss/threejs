@@ -1,11 +1,15 @@
 import {useState} from 'react'
 import {OrbitControls, PerspectiveCamera} from '@react-three/drei'
-import Floor from './components/Floor'
-import OfficeTable from './components/OfficeTable'
-import TableLighting from './components/TableLighting'
-import Person from './components/Person'
+import Floor from './model/Floor.tsx'
+import OfficeTable from './model/OfficeTable.tsx'
+import TableLighting from './model/TableLighting.tsx'
+import Person from './model/Person.tsx'
 
-export default function Scene() {
+interface SceneProps {
+    onModelLoad?: () => void
+}
+
+export default function Scene({onModelLoad}: SceneProps) {
     const [isLightOn, setIsLightOn] = useState(true)
     const tableWidth = 1.5
     const spacing = 0.05
@@ -43,12 +47,12 @@ export default function Scene() {
 
             {/* 6 человек за столами - первый ряд */}
             {row1PersonPositions.map((person, index) => (
-                <Person key={`row1-person-${index}`} position={person.position} rotation={person.rotation}/>
+                <Person key={`row1-person-${index}`} position={person.position} rotation={person.rotation} onModelLoad={onModelLoad}/>
             ))}
 
             {/* 6 человек за столами - второй ряд */}
             {row2PersonPositions.map((person, index) => (
-                <Person key={`row2-person-${index}`} position={person.position} rotation={person.rotation}/>
+                <Person key={`row2-person-${index}`} position={person.position} rotation={person.rotation} onModelLoad={onModelLoad}/>
             ))}
         </>
     )

@@ -38,6 +38,12 @@
   flex: 1;
   width: 100%;
   position: relative;
+  isolation: isolate;
+}
+
+.canvas-container canvas {
+  position: relative;
+  z-index: 1;
 }
 
 .controls-info {

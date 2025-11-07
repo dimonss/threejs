@@ -1,5 +1,5 @@
-import LightSwitch from './LightSwitch'
-import Laptop from './Laptop'
+import LightSwitch from './LightSwitch.tsx'
+import Laptop from './Laptop.tsx'
 
 export default function StandardTable({
     position,

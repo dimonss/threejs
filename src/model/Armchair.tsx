@@ -1,13 +1,32 @@
-import {useMemo} from 'react'
+import {useMemo, useEffect, useRef} from 'react'
 import {useGLTF} from '@react-three/drei'
-import {Mesh, MeshStandardMaterial, Texture} from 'three'
+import {Mesh, MeshStandardMaterial, Texture, Object3D} from 'three'
 
-export default function Armchair({position, rotation}: { position: [number, number, number], rotation?: number }) {
+interface ArmchairProps {
+    position: [number, number, number]
+    rotation?: number
+    onLoad?: () => void
+}
+
+export default function Armchair({position, rotation, onLoad}: ArmchairProps) {
     // В Vite с base path '/threejs/' файлы из public доступны по /threejs/armchair.gltf
     // В dev-режиме Vite автоматически добавляет base path к файлам из public
     const baseUrl = import.meta.env.BASE_URL || '/'
     const modelPath = `${baseUrl}armchair.gltf`.replace(/\/\//g, '/')
     const {scene} = useGLTF(modelPath)
+    const hasLoadedRef = useRef(false)
+
+    useEffect(() => {
+        if (scene && !hasLoadedRef.current) {
+            hasLoadedRef.current = true
+            // Небольшая задержка для гарантии, что модель полностью загружена
+            setTimeout(() => {
+                if (onLoad) {
+                    onLoad()
+                }
+            }, 50)
+        }
+    }, [scene, onLoad, modelPath])
 
     // Клонируем и настраиваем сцену с помощью useMemo для оптимизации
     const clonedScene = useMemo(() => {
@@ -15,14 +34,16 @@ export default function Armchair({position, rotation}: { position: [number, numb
         const baseUrlForTextures = import.meta.env.BASE_URL || '/'
 
         // Настраиваем материалы и тени для всех мешей в модели
-        cloned.traverse((child) => {
-            if (child instanceof Mesh) {
-                child.castShadow = true
-                child.receiveShadow = true
+        cloned.traverse((child: Object3D) => {
+            // Проверяем, является ли объект Mesh через свойство type
+            if (child.type === 'Mesh' && 'material' in child) {
+                const mesh = child as Mesh
+                mesh.castShadow = true
+                mesh.receiveShadow = true
 
                 // Исправляем пути к текстурам в материалах
-                if (child.material) {
-                    const material = child.material as MeshStandardMaterial
+                if (mesh.material) {
+                    const material = mesh.material as MeshStandardMaterial
 
                     // Функция для обновления пути текстуры
                     const updateTexturePath = (texture: Texture | null) => {
