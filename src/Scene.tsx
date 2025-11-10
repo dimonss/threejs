@@ -22,16 +22,16 @@ export default function Scene({onModelLoad}: SceneProps) {
     // Позиции для 6 человек - по одному за каждый стол
     // Первый ряд (лицом к камере, смотрят на юг)
     const row1PersonPositions: Array<{ position: [number, number, number], rotation: number }> = [
-        {position: [-tableWidth - spacing, 0, 0.6 + 0.6], rotation: Math.PI}, // Левый
-        {position: [0, 0, 0.6 + 0.6], rotation: Math.PI},                     // Центр
-        {position: [tableWidth + spacing, 0, 0.6 + 0.6], rotation: Math.PI},   // Правый
+        {position: [-tableWidth - spacing, 0, 0.6 + 0.2], rotation: Math.PI}, // Левый
+        {position: [0, 0, 0.6 + 0.2], rotation: Math.PI},                     // Центр
+        {position: [tableWidth + spacing, 0, 0.6 + 0.2], rotation: Math.PI},   // Правый
     ]
 
     // Второй ряд (лицом от камеры, смотрят на север)
     const row2PersonPositions: Array<{ position: [number, number, number], rotation: number }> = [
-        {position: [-tableWidth - spacing, 0, -0.6 - 0.6], rotation: 0}, // Левый
-        {position: [0, 0, -0.6 - 0.6], rotation: 0},                     // Центр
-        {position: [tableWidth + spacing, 0, -0.6 - 0.6], rotation: 0},     // Правый
+        {position: [-tableWidth - spacing, 0, -0.6 - 0.2], rotation: 0}, // Левый
+        {position: [0, 0, -0.6 - 0.2], rotation: 0},                     // Центр
+        {position: [tableWidth + spacing, 0, -0.6 - 0.2], rotation: 0},     // Правый
     ]
 
     return (
