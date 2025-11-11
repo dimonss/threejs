@@ -12,7 +12,7 @@ function App() {
         <p>The MBusiness Office</p>
       </div>
       <div className="canvas-container">
-        <ModelLoader totalModels={7}>
+        <ModelLoader totalModels={8}>
           {(onModelLoad) => (
             <Canvas
               shadows="soft"

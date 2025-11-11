@@ -3,9 +3,10 @@ import {OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import Floor from './model/Floor.tsx'
 import OfficeTable from './model/officeTable/OfficeTable.tsx'
 import TableLighting from './model/TableLighting.tsx'
-import Person from './model/Person.tsx'
 import Column from './model/Column.tsx'
 import Artem from './model/Artem.tsx'
+import Dmitrii from './model/Dmitrii.tsx'
+import Armchair from './model/Armchair.tsx'
 
 interface SceneProps {
     onModelLoad?: () => void
@@ -13,26 +14,26 @@ interface SceneProps {
 
 export default function Scene({onModelLoad}: SceneProps) {
     const [isLightOn, setIsLightOn] = useState(true)
-    const tableWidth = 1.5
-    const spacing = 0.05
+    const tableWidth = 1.55
+    const spacing = 0
 
     const toggleLight = () => {
         setIsLightOn(!isLightOn)
     }
 
-    // Позиции для 6 человек - по одному за каждый стол
-    // Первый ряд (лицом к камере, смотрят на юг)
-    const row1PersonPositions: Array<{ position: [number, number, number], rotation: number }> = [
-        {position: [-tableWidth - spacing, 0, 0.6 + 0.6], rotation: Math.PI}, // Левый
-        {position: [0, 0, 0.6 + 0.6], rotation: Math.PI},                     // Центр
-        {position: [tableWidth + spacing, 0, 0.6 + 0.6], rotation: Math.PI},   // Правый
+    // Позиции для стульев (перед столами)
+    // Первый ряд - стулья перед столами (z больше, так как ближе к камере)
+    const row1ChairPositions = [
+        [-tableWidth - spacing, 0, 0.5 + 0.6],  // Левый
+        [0, 0, 0.5 + 0.6],                      // Центр
+        [tableWidth + spacing, 0, 0.5 + 0.6],   // Правый
     ]
 
-    // Второй ряд (лицом от камеры, смотрят на север)
-    const row2PersonPositions: Array<{ position: [number, number, number], rotation: number }> = [
-        {position: [-tableWidth - spacing, 0, -0.6 - 0.6], rotation: 0}, // Левый
-        {position: [0, 0, -0.6 - 0.6], rotation: 0},                     // Центр
-        {position: [tableWidth + spacing, 0, -0.6 - 0.6], rotation: 0},     // Правый
+    // Второй ряд - стулья перед столами (z меньше, так как дальше от камеры)
+    const row2ChairPositions = [
+        [-tableWidth - spacing, 0, -0.8],  // Левый
+        [0, 0, -0.8],                       // Центр
+        [tableWidth + spacing, 0, -0.8],   // Правый
     ]
 
     return (
@@ -49,21 +50,39 @@ export default function Scene({onModelLoad}: SceneProps) {
             {/* Колонна с выключателем света */}
             <Column position={[-3, 0, 5]} isOn={isLightOn} onToggle={toggleLight}/>
 
-            {/* 6 человек за столами - первый ряд */}
-            {row1PersonPositions.map((person, index) => (
-                <Person key={`row1-person-${index}`} position={person.position} rotation={person.rotation} onModelLoad={onModelLoad}/>
+            {/* Стулья первого ряда */}
+            {row1ChairPositions.map((chairPos, index) => (
+                <Armchair 
+                    key={`row1-chair-${index}`} 
+                    position={[chairPos[0], chairPos[1] - 0.14, chairPos[2] - 0.15]}
+                    rotation={Math.PI}
+                    onLoad={onModelLoad}
+                />
             ))}
 
-            {/* 6 человек за столами - второй ряд */}
-            {row2PersonPositions.map((person, index) => (
-                <Person key={`row2-person-${index}`} position={person.position} rotation={person.rotation} onModelLoad={onModelLoad}/>
+            {/* Стулья второго ряда */}
+            {row2ChairPositions.map((chairPos, index) => (
+                <Armchair 
+                    key={`row2-chair-${index}`} 
+                    position={[chairPos[0], chairPos[1] - 0.14, chairPos[2] - 0.15]}
+                    rotation={0}
+                    onLoad={onModelLoad}
+                />
             ))}
 
-            {/* Artem сидит на центральном столе первого ряда */}
+            {/* Artem на первом ряду правом стуле */}
             <Artem 
-                position={[0, 0.6, 0.4]} 
+                position={[row1ChairPositions[2][0] - 0.1, row1ChairPositions[2][1] - 0.15, row1ChairPositions[2][2] - 0.17]}
                 rotation={Math.PI}
-                scale={[1, 1, 1]}
+                scale={[0.8, 0.8, 0.8]}
+                onLoad={onModelLoad}
+            />
+
+            {/* Dmitrii на втором ряду центральном стуле */}
+            <Dmitrii 
+                position={[row2ChairPositions[1][0] - 0.25, row2ChairPositions[1][1], row2ChairPositions[1][2] - 0.35]} 
+                rotation={0}
+                scale={[0.9, 0.9, 0.9]}
                 onLoad={onModelLoad}
             />
         </>
