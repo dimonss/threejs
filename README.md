@@ -1,5 +1,126 @@
 # Three.js Pet Project
 
+An interactive 3D scene created using React, Three.js, and React Three Fiber.
+
+## 🚀 Technologies
+
+- **React** 19.1.1
+- **TypeScript** 5.9.3
+- **Node.js** 24.11.0
+- **Three.js** 0.181.0
+- **React Three Fiber** 9.4.0
+- **React Three Drei** 10.7.6
+- **Vite** 7.1.7
+
+## 📋 Requirements
+
+- Node.js 24.x
+- npm 11.6.1
+
+## 🛠️ Installation and Setup
+
+### Switching to Node.js 24
+
+If you have nvm installed, the project will automatically use the version from `.nvmrc`:
+
+```bash
+nvm use
+```
+
+Or manually:
+
+```bash
+nvm use 24
+```
+
+### Installing Dependencies
+
+```bash
+npm install
+```
+
+### Running the Dev Server
+
+```bash
+npm run dev
+```
+
+The project will be available at `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Previewing Production Build
+
+```bash
+npm run preview
+```
+
+### TypeScript Type Checking
+
+```bash
+npm run type-check
+```
+
+## 🎮 Controls
+
+- **Left click + drag**: Rotate camera
+- **Right click + drag**: Pan
+- **Mouse wheel scroll**: Zoom in/out
+
+## 🎨 Features
+
+- Interactive 3D scene with rotating objects
+- Three main objects: sphere, cube, and torus
+- Dynamic materials and effects
+- Particles for atmosphere
+- Lighting with multiple light sources
+- Base plane with shadows
+- Full TypeScript support with strict typing
+
+## 📁 Project Structure
+
+```
+threejs/
+├── src/
+│   ├── Scene.tsx      # Main 3D scene
+│   ├── App.tsx        # Main application component
+│   ├── App.css        # Application styles
+│   ├── index.css      # Global styles
+│   └── main.tsx       # Entry point
+├── .nvmrc             # Node.js version for nvm
+├── tsconfig.json      # TypeScript configuration
+├── package.json       # Project dependencies
+└── vite.config.ts     # Vite configuration
+```
+
+## 🎯 What's Included
+
+- Rotating sphere with distorting material
+- Rotating cube with metallic material
+- Rotating torus with golden material
+- Floating particles
+- Interactive camera controls
+- Gradient background
+- TypeScript for type safety
+
+## 💻 TypeScript
+
+The project is fully written in TypeScript with strict typing:
+- Typed React components
+- Typed refs for Three.js objects
+- Typed hooks and callbacks
+- Autocomplete and type checking in IDE
+
+Enjoy! 🎉
+
+___
+
+# Three.js Pet Project
+
 Интерактивная 3D-сцена, созданная с использованием React, Three.js и React Three Fiber.
 
 ## 🚀 Технологии
@@ -116,3 +237,4 @@ threejs/
 - Автодополнение и проверка типов в IDE
 
 Приятного использования! 🎉
+
