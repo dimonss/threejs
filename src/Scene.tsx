@@ -5,6 +5,7 @@ import OfficeTable from './model/officeTable/OfficeTable.tsx'
 import TableLighting from './model/TableLighting.tsx'
 import Person from './model/Person.tsx'
 import Column from './model/Column.tsx'
+import Artem from './model/Artem.tsx'
 
 interface SceneProps {
     onModelLoad?: () => void
@@ -22,16 +23,16 @@ export default function Scene({onModelLoad}: SceneProps) {
     // Позиции для 6 человек - по одному за каждый стол
     // Первый ряд (лицом к камере, смотрят на юг)
     const row1PersonPositions: Array<{ position: [number, number, number], rotation: number }> = [
-        {position: [-tableWidth - spacing, 0, 0.6 + 0.2], rotation: Math.PI}, // Левый
-        {position: [0, 0, 0.6 + 0.2], rotation: Math.PI},                     // Центр
-        {position: [tableWidth + spacing, 0, 0.6 + 0.2], rotation: Math.PI},   // Правый
+        {position: [-tableWidth - spacing, 0, 0.6 + 0.6], rotation: Math.PI}, // Левый
+        {position: [0, 0, 0.6 + 0.6], rotation: Math.PI},                     // Центр
+        {position: [tableWidth + spacing, 0, 0.6 + 0.6], rotation: Math.PI},   // Правый
     ]
 
     // Второй ряд (лицом от камеры, смотрят на север)
     const row2PersonPositions: Array<{ position: [number, number, number], rotation: number }> = [
-        {position: [-tableWidth - spacing, 0, -0.6 - 0.2], rotation: 0}, // Левый
-        {position: [0, 0, -0.6 - 0.2], rotation: 0},                     // Центр
-        {position: [tableWidth + spacing, 0, -0.6 - 0.2], rotation: 0},     // Правый
+        {position: [-tableWidth - spacing, 0, -0.6 - 0.6], rotation: 0}, // Левый
+        {position: [0, 0, -0.6 - 0.6], rotation: 0},                     // Центр
+        {position: [tableWidth + spacing, 0, -0.6 - 0.6], rotation: 0},     // Правый
     ]
 
     return (
@@ -57,6 +58,14 @@ export default function Scene({onModelLoad}: SceneProps) {
             {row2PersonPositions.map((person, index) => (
                 <Person key={`row2-person-${index}`} position={person.position} rotation={person.rotation} onModelLoad={onModelLoad}/>
             ))}
+
+            {/* Artem сидит на центральном столе первого ряда */}
+            <Artem 
+                position={[0, 0.6, 0.4]} 
+                rotation={Math.PI}
+                scale={[1, 1, 1]}
+                onLoad={onModelLoad}
+            />
         </>
     )
 }
