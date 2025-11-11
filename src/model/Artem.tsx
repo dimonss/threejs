@@ -94,27 +94,28 @@ export default function Artem({position, rotation, scale = [1, 1, 1], onLoad}: A
 
     // Создаем mixer для анимаций и применяем их к оригинальной сцене
     useEffect(() => {
-        if (configuredScene && animations && animations.length > 0) {
-            mixerRef.current = new AnimationMixer(configuredScene)
-            
-            // Применяем все анимации к оригинальной сцене (без клонирования)
-            animations.forEach((clip) => {
-                const action = mixerRef.current!.clipAction(clip)
-                if (action) {
-                    action.play()
-                }
-            })
-        }
+    if (configuredScene && animations && animations.length > 0) {
+        const mixer = new AnimationMixer(configuredScene)
+        mixerRef.current = mixer
 
-        // Очистка при размонтировании
-        return () => {
-            if (mixerRef.current) {
-                mixerRef.current.stopAllAction()
-                mixerRef.current.uncacheRoot(configuredScene!)
-                mixerRef.current = null
-            }
+        // Ищем анимацию по названию
+        const seatClip = animations.find(a => a.name.toLowerCase().includes("seat"))
+
+        if (seatClip) {
+            const seatAction = mixer.clipAction(seatClip)
+            seatAction.reset().play()
         }
-    }, [configuredScene, animations])
+    }
+
+    // Очистка при размонтировании
+    return () => {
+        if (mixerRef.current) {
+            mixerRef.current.stopAllAction()
+            mixerRef.current.uncacheRoot(configuredScene!)
+            mixerRef.current = null
+        }
+    }
+}, [configuredScene, animations])
 
     // Обновляем анимацию каждый кадр
     useFrame((_, delta) => {
