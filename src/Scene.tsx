@@ -24,16 +24,16 @@ export default function Scene({onModelLoad}: SceneProps) {
     // Позиции для стульев (перед столами)
     // Первый ряд - стулья перед столами (z больше, так как ближе к камере)
     const row1ChairPositions = [
-        [-tableWidth - spacing, 0, 0.5 + 0.6],  // Левый
-        [0, 0, 0.5 + 0.6],                      // Центр
-        [tableWidth + spacing, 0, 0.5 + 0.6],   // Правый
+        [-tableWidth+0.1, 0, 0.5 + 0.6],  // Левый
+        [0.1, 0, 0.5 + 0.6],                      // Центр
+        [tableWidth + spacing+0.1, 0, 0.5 + 0.6],   // Правый
     ]
 
     // Второй ряд - стулья перед столами (z меньше, так как дальше от камеры)
     const row2ChairPositions = [
-        [-tableWidth - spacing, 0, -0.8],  // Левый
-        [0, 0, -0.8],                       // Центр
-        [tableWidth + spacing, 0, -0.8],   // Правый
+        [-tableWidth - spacing - 0.1, 0, -0.8],  // Левый
+        [-0.1, 0, -0.8],                       // Центр
+        [tableWidth + spacing - 0.1, 0, -0.8],   // Правый
     ]
 
     return (
