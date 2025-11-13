@@ -7,6 +7,7 @@ import Column from './model/Column.tsx'
 import Artem from './model/Artem.tsx'
 import Dmitrii from './model/Dmitrii.tsx'
 import Armchair from './model/Armchair.tsx'
+import Salamat from './model/Salamat.tsx'
 
 interface SceneProps {
     onModelLoad?: () => void
@@ -85,6 +86,14 @@ export default function Scene({onModelLoad}: SceneProps) {
                 scale={[0.9, 0.9, 0.9]}
                 onLoad={onModelLoad}
             />
+
+             <Salamat
+                position={[row2ChairPositions[1][0] - 0.40, row2ChairPositions[1][1] - 0.50, row2ChairPositions[1][2]]} 
+                rotation={0}
+                scale={[0.9, 0.9, 0.9]}
+                onLoad={onModelLoad}
+            />
+
         </>
     )
 }
